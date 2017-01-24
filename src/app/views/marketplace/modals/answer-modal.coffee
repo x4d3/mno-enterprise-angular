@@ -9,8 +9,7 @@ angular.module 'mnoEnterpriseAngular'
     $uibModalInstance.dismiss()
 
   $scope.submitAnswer = ->
-    question.answers.push({text: $scope.answerText})
-    $uibModalInstance.dismiss()
+    $uibModalInstance.close($scope.questionText)
 
   return
 )

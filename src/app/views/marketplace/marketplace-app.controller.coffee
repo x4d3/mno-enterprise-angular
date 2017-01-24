@@ -19,8 +19,6 @@ angular.module 'mnoEnterpriseAngular'
       vm.conflictingApp = null
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
-      # Flag for comments and questions tabs
-      vm.rewieTab = true
 
       #====================================
       # Scope Management
@@ -152,10 +150,10 @@ angular.module 'mnoEnterpriseAngular'
         $uibModal.open(
           templateUrl: 'app/views/marketplace/modals/comment-modal.html'
           controller: 'CommentModal'
-          resolve:
-            testimonial: testimonial
-        )
-
+        ).result.then (
+          (response) ->
+            testimonial.comments.push({text: response})
+          )
       #====================================
       # Question modal
       #====================================
@@ -163,9 +161,10 @@ angular.module 'mnoEnterpriseAngular'
         $uibModal.open(
           templateUrl: 'app/views/marketplace/modals/question-modal.html'
           controller: 'QuestionModal'
-          resolve:
-            questions: questions
-        )
+        ).result.then (
+          (response) ->
+            questions.questions.push({text: response, answers: []})
+          )
 
       #====================================
       # Answer modal
@@ -176,7 +175,37 @@ angular.module 'mnoEnterpriseAngular'
           controller: 'AnswerModal'
           resolve:
             question: question
-        )
+        ).result.then (
+          (response) ->
+            question.answers.push({text: response})
+          )
+
+      #====================================
+      # Edit modal
+      #====================================
+      vm.openEditModal = (object) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/edit-modal.html'
+          controller: 'EditModal'
+          resolve:
+            object: object
+        ).result.then (
+          (response) ->
+            object.text = response
+          )
+
+      #====================================
+      # Deletion modal
+      #====================================
+      vm.openDeleteModal = (object, key) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/delete-modal.html'
+          controller: 'DeleteModal'
+        ).result.then (
+          (response) ->
+            if response
+              object.splice(key, 1)
+          )
 
       #====================================
       # Cart Management

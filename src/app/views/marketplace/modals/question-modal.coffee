@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('QuestionModal', ($scope, $uibModalInstance, questions) ->
+.controller('QuestionModal', ($scope, $uibModalInstance) ->
 
   $scope.questionText = ''
 
@@ -8,9 +8,7 @@ angular.module 'mnoEnterpriseAngular'
     $uibModalInstance.dismiss()
 
   $scope.submitQuestion = ->
-    questions.questions.push({text: $scope.questionText, answers: []})
-
-    $uibModalInstance.dismiss()
+    $uibModalInstance.close($scope.questionText)
 
   return
 )

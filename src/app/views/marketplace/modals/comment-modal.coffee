@@ -1,5 +1,5 @@
 angular.module 'mnoEnterpriseAngular'
-.controller('CommentModal', ($scope, $uibModalInstance, testimonial) ->
+.controller('CommentModal', ($scope, $uibModalInstance) ->
 
   $scope.commentText = ''
 
@@ -8,8 +8,9 @@ angular.module 'mnoEnterpriseAngular'
     $uibModalInstance.dismiss()
 
   $scope.submitIteraction = ->
-    testimonial.comments.push({text: $scope.commentText})
-    $uibModalInstance.dismiss()
+    $uibModalInstance.close($scope.commentText)
+    # testimonial.comments.push({text: $scope.commentText})
+    # $uibModalInstance.dismiss()
 
   return
 )
