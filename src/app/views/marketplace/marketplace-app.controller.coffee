@@ -42,6 +42,8 @@ angular.module 'mnoEnterpriseAngular'
           testimonial.comments = []
         )
 
+        vm.app.questions = []
+
         vm.isLoading = false
 
       # Check that the testimonial is not empty
@@ -152,6 +154,28 @@ angular.module 'mnoEnterpriseAngular'
           controller: 'CommentModal'
           resolve:
             testimonial: testimonial
+        )
+
+      #====================================
+      # Question modal
+      #====================================
+      vm.openQuestionModal = (questions) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/question-modal.html'
+          controller: 'QuestionModal'
+          resolve:
+            questions: questions
+        )
+
+      #====================================
+      # Answer modal
+      #====================================
+      vm.openAnswerModal = (question) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/answer-modal.html'
+          controller: 'AnswerModal'
+          resolve:
+            question: question
         )
 
       #====================================
