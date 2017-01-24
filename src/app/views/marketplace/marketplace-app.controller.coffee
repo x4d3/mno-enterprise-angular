@@ -19,6 +19,8 @@ angular.module 'mnoEnterpriseAngular'
       vm.conflictingApp = null
       # Enabling pricing
       vm.isPriceShown = PRICING_CONFIG && PRICING_CONFIG.enabled
+      # Flag for comments and questions tabs
+      vm.rewieTab = true
 
       #====================================
       # Scope Management
@@ -35,6 +37,10 @@ angular.module 'mnoEnterpriseAngular'
 
         # Get the user role in this organization
         MnoeOrganizations.get().then((response) -> vm.user_role = response.current_user.role)
+
+        vm.app.testimonials.forEach((testimonial) ->
+          testimonial.comments = []
+        )
 
         vm.isLoading = false
 
@@ -135,6 +141,17 @@ angular.module 'mnoEnterpriseAngular'
           controller: modalInfo.controller
           resolve:
             app: vm.appInstance
+        )
+
+      #====================================
+      # Comment modal
+      #====================================
+      vm.openCommentModal = (testimonial) ->
+        $uibModal.open(
+          templateUrl: 'app/views/marketplace/modals/comment-modal.html'
+          controller: 'CommentModal'
+          resolve:
+            testimonial: testimonial
         )
 
       #====================================
